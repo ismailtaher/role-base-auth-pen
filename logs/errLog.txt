@@ -7,3 +7,6 @@
 20250731	18:32:24	33ad2971-f6f4-4175-adfc-3afa076fcb99	SyntaxError: Expected ',' or '}' after property value in JSON at position 18 (line 1 column 19) 
 20250803	06:21:16	96dcd159-1004-469e-a9f7-0d51ec20849f	TypeError: allowedOrigins.indexOf is not a function 
 20250803	06:22:27	8ae6a163-e95b-4081-9796-e37f0e2fe0b9	TypeError: allowedOrigins.indexOf is not a function 
+20250805	21:13:53	76809239-d0d1-42c0-a6c6-fef3036cd825	TypeError: Cannot destructure property 'user' of 'req.body' as it is undefined. 
+20250805	21:14:10	7fc7d549-9693-4d5a-9f17-ac33278985d1	Error: Cannot use a pool after calling end on the pool 
+20250805	21:14:21	20aa1c69-9d7b-46ba-814f-5aa97872f730	Error: Cannot use a pool after calling end on the pool 

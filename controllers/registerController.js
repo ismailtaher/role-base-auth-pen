@@ -1,13 +1,10 @@
-const usersDB = {
-  users: require('../model/users.json'),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
-const fsPromises = require('fs').promises;
-const path = require('path');
 const bcrypt = require('bcrypt');
+const pool = require('../config/db');
+const {
+  findUserByUsername,
+  createUser,
+  assignRoleToUser,
+} = require('../model/userModel');
 
 const handleNewUser = async (req, res) => {
   const { user, pwd } = req.body;
@@ -18,27 +15,32 @@ const handleNewUser = async (req, res) => {
       .json({ message: 'Username and Password are required!' });
 
   // check for duplicate usernames in database
-  const duplicate = usersDB.users.find((person) => person.username === user);
+  const duplicateUser = await findUserByUsername(user);
 
-  if (duplicate) return res.sendStatus(409); // Conflict
+  if (duplicateUser) return res.sendStatus(409); // Conflict
 
   try {
     // encrypt password
     const hashedPwd = await bcrypt.hash(pwd, 10);
-    // store the new user
-    const newUser = {
-      username: user,
-      roles: { User: 2001 },
-      password: hashedPwd,
-    };
-    usersDB.setUsers([...usersDB.users, newUser]);
-    await fsPromises.writeFile(
-      path.join(__dirname, '..', 'model', 'users.json'),
-      JSON.stringify(usersDB.users)
-    );
-    console.log(usersDB.users);
-    res.status(201).json({ success: `New user ${user} created!` });
+
+    // To create a user and assign it a role in user_roles table as well we need to use a Transaction
+
+    // start Transaction
+    await pool.query('BEGIN');
+
+    // Insert the new user in 'users' table
+    const newUserId = await createUser(user, hashedPwd);
+    // Assign the new user a role of 2001 i.e. User in 'user_roles'
+    await assignRoleToUser(newUserId, 2001);
+    // Commit the Transaction
+    await pool.query('COMMIT');
+
+    res
+      .status(201)
+      .json({ success: `New user ${user} created with User role!` });
   } catch (err) {
+    await pool.query('ROLLBACK');
+    console.error('Registration error:', err.message);
     res.status(500).json({ message: err.message });
   }
 };

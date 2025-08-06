@@ -8,7 +8,11 @@ const errorHandler = require('./middleware/errorHandler');
 const verifyJWT = require('./middleware/verifyJWT');
 const cookieParser = require('cookie-parser');
 const credentials = require('./middleware/credentials');
+const { testConnection } = require('./config/testDB');
 const PORT = process.env.PORT || 3500;
+
+// test pg-db connection
+testConnection();
 
 // custom middleware logger
 app.use(logger);
