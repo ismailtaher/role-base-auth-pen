@@ -1,16 +1,11 @@
-const usersDB = {
-  users: require('../model/users.json'),
-  setUsers: function (data) {
-    this.users = data;
-  },
-};
-
 const bcrypt = require('bcrypt');
-
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const fsPromises = require('fs').promises;
-const path = require('path');
+const jwt = require('jsonwebtoken');
+const {
+  findUserByUsername,
+  getUserRoles,
+  assignRefreshTokenToUser,
+} = require('../model/userModel');
 
 const handleLogin = async (req, res) => {
   const { user, pwd } = req.body;
@@ -19,19 +14,20 @@ const handleLogin = async (req, res) => {
       .status(400)
       .json({ message: 'Username and Password are required!' });
 
-  const foundUser = usersDB.users.find((person) => person.username === user);
-
+  // finding the user using findUserByUsername function
+  const foundUser = await findUserByUsername(user);
   if (!foundUser) return res.sendStatus(401); //unauthorized
 
   // evaluate password
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (match) {
-    const roles = Object.values(foundUser.roles);
+    // getting the user's role form user_roles table
+    const roles = await getUserRoles(foundUser.id);
     // create JWTs
     const accessToken = jwt.sign(
       { UserInfo: { username: foundUser.username, roles: roles } },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '30s' }
+      { expiresIn: '1m' }
     );
     const refreshToken = jwt.sign(
       { username: foundUser.username },
@@ -39,16 +35,10 @@ const handleLogin = async (req, res) => {
       { expiresIn: '1d' }
     );
 
-    // Saving the refreshToken with current user
-    const otherUsers = usersDB.users.filter(
-      (person) => person.username !== foundUser.username
-    );
-    const currentUser = { ...foundUser, refreshToken };
-    usersDB.setUsers([...otherUsers, currentUser]);
-    await fsPromises.writeFile(
-      path.join(__dirname, '..', 'model', 'users.json'),
-      JSON.stringify(usersDB.users)
-    );
+    // Saving the refreshToken with current user is users table
+    await assignRefreshTokenToUser(foundUser.id, refreshToken);
+
+    // send refershToken to client
     res.cookie('jwt', refreshToken, {
       httpOnly: true,
       /* sameSite: 'None',
@@ -56,6 +46,8 @@ const handleLogin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
       // commented out options are for production code
     });
+
+    // send accessToken to client
     res.json({ accessToken });
   } else {
     res.sendStatus(401);

@@ -22,4 +22,25 @@ const assignRoleToUser = async (userId, roleId) => {
   );
 };
 
-module.exports = { findUserByUsername, createUser, assignRoleToUser };
+const getUserRoles = async (userId) => {
+  const result = await pool.query(
+    'SELECT role_id FROM user_roles WHERE user_id = $1',
+    [userId]
+  );
+  return result.rows.map((row) => row.role_id);
+};
+
+const assignRefreshTokenToUser = async (userId, refreshToken) => {
+  await pool.query('UPDATE users SET refresh_token = $1 WHERE id = $2', [
+    refreshToken,
+    userId,
+  ]);
+};
+
+module.exports = {
+  findUserByUsername,
+  createUser,
+  assignRoleToUser,
+  getUserRoles,
+  assignRefreshTokenToUser,
+};
