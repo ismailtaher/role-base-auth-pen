@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 
+// registerController logic
 const findUserByUsername = async (username) => {
   const result = await pool.query('SELECT * FROM users WHERE username = $1', [
     username,
@@ -22,6 +23,8 @@ const assignRoleToUser = async (userId, roleId) => {
   );
 };
 
+// authController logic
+
 const getUserRoles = async (userId) => {
   const result = await pool.query(
     'SELECT role_id FROM user_roles WHERE user_id = $1',
@@ -37,10 +40,28 @@ const assignRefreshTokenToUser = async (userId, refreshToken) => {
   ]);
 };
 
+// refreshController & logoutController logic
+const findUserByRefreshToken = async (refreshToken) => {
+  const result = await pool.query(
+    'SELECT * FROM users WHERE refresh_token = $1',
+    [refreshToken]
+  );
+  return result.rows[0];
+};
+
+// logoutController logic
+const deleteRefreshToken = async (userId) => {
+  await pool.query('UPDATE users SET refresh_token = NULL WHERE id = $1', [
+    userId,
+  ]);
+};
+
 module.exports = {
   findUserByUsername,
   createUser,
   assignRoleToUser,
   getUserRoles,
   assignRefreshTokenToUser,
+  findUserByRefreshToken,
+  deleteRefreshToken,
 };

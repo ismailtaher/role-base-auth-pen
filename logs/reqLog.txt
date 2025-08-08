@@ -244,3 +244,16 @@
 20250807	17:11:48	107b8c0c-3dd5-4bf6-a6de-d1434fede2a1	POST	undefined	/employees 
 20250807	17:12:40	b37ac607-2b3f-403e-8051-8edfc4a662c6	POST	undefined	/auth 
 20250807	17:12:50	b326c023-55ac-41dd-8958-beaa8b0498d1	GET	undefined	/employees 
+20250807	18:30:18	fa7db8f2-f1c5-4c5f-aa2b-9031419e1c92	GET	undefined	/refresh 
+20250807	18:30:23	1f9e2ff6-b2f3-46ac-9f00-a9436c450ce3	POST	undefined	/auth 
+20250807	18:30:27	57bc5fca-5cad-4b1b-a556-e01c8ea874f0	GET	undefined	/refresh 
+20250807	18:31:21	83357359-84e2-49d1-9ee9-d1dc25d77664	GET	undefined	/refresh 
+20250807	18:36:34	f84837ae-260c-459d-baa5-843c26a480f1	GET	undefined	/refresh 
+20250807	18:41:49	64bcf0de-87c8-4543-82df-6e7336dd9239	GET	undefined	/refresh 
+20250807	18:48:08	5c76a638-1729-48b3-8376-e8a058ec19d9	POST	undefined	/auth 
+20250807	19:40:35	367bc330-e8d3-433c-a4ec-e4099a014456	POST	undefined	/auth 
+20250807	19:40:40	2e579b8c-2877-4d17-b07c-a3cc98382123	GET	undefined	/refresh 
+20250807	19:41:08	1525db4a-3f35-4591-93e0-901e55e6f9c2	GET	undefined	/refresh 
+20250807	20:58:15	c24ec2dd-b41a-4dcb-8f89-49cd3c330683	GET	undefined	/refresh 
+20250808	15:37:10	7718f2b5-bf05-436e-9032-5234f4788916	POST	undefined	/auth 
+20250808	15:37:20	642d4752-6d25-46db-9649-bcf010c1f8fd	GET	undefined	/logout 
