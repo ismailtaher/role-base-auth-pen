@@ -13,3 +13,6 @@
 20250807	17:01:03	e92aea16-dde1-4659-aa46-c491ce507fdd	error: syntax error at or near "WHERE" 
 20250807	17:02:49	a50872ea-3b5b-4185-a7f9-ce0ff745dbd3	error: column "refersh_token" of relation "users" does not exist 
 20250807	17:03:25	d41c69f3-6885-460b-aa23-1112cb4ddc66	error: invalid input syntax for type integer: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlzbWFpbCIsImlhdCI6MTc1NDU2ODIwNSwiZXhwIjoxNzU0NjU0NjA1fQ.a1EKiDl0o22bcrKlaO-b2JHw1E9l17gg1d75FroaWLA" 
+20250808	16:21:51	2bf96a8e-f22d-4f08-a170-329f408db657	error: there is no parameter $1 
+20250808	16:55:18	debd55dd-be37-401e-84ca-81f4ea79f911	TypeError: Cannot read properties of undefined (reading '0') 
+20250808	18:10:51	766ad52a-2146-4f62-b697-88cc73843a30	error: null value in column "name" of relation "products" violates not-null constraint 

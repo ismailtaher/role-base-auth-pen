@@ -51,7 +51,7 @@ app.use('/logout', require('./routes/logout'));
 // verifyJWT middleware to verify our access token
 app.use(verifyJWT);
 // protected route placed below our verifyJWT middleware
-app.use('/employees', require('./routes/api/employees'));
+app.use('/products', require('./routes/api/products'));
 
 // catch all / default route
 app.use((req, res) => {
