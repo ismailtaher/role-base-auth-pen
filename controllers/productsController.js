@@ -1,4 +1,3 @@
-const pool = require('../config/db');
 const productModel = require('../model/productModel');
 
 const getAllProducts = async (req, res) => {
