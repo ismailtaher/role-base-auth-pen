@@ -59,10 +59,10 @@ INSERT INTO roles (id, name) VALUES
 (2001, 'User');
 
 INSERT INTO permissions (id, name) VALUES
-(1, 'read'),
-(2, 'create'),
-(3, 'update'),
-(4, 'delete');
+(1, 'GET'),
+(2, 'POST'),
+(3, 'PUT'),
+(4, 'DELETE');
 
 INSERT INTO role_permissions (role_id, permission_id) VALUES
 (5150, 1),
