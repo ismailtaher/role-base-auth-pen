@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 // built-in middleware for json
 app.use(express.json());
 
-// middleware for cookies
+// middleware for cookies (for our refershToken's httpOnly cookie)
 app.use(cookieParser());
 
 // middleware to serve static files
